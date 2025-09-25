@@ -3,432 +3,472 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulir Kunjungan Rumah - Data Keluarga</title>
+    <title>Checklist Kunjungan Rumah - Pengendalian TBC</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            box-sizing: border-box;
+        }
         .form-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 24px;
             margin-bottom: 20px;
-            color: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
         }
-        .btn-secondary {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-        .member-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
+        .anggota-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #4f46e5;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 min-h-screen p-4">
-    <div class="max-w-4xl mx-auto">
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
         <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-white mb-2">📋 Formulir Kunjungan Rumah</h1>
-            <p class="text-white opacity-90">Sistem Pencatatan Data Keluarga</p>
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">📋 Checklist Kunjungan Rumah</h1>
+            <p class="text-lg text-gray-600">Pengendalian Penyakit Menular (TBC)</p>
         </div>
 
-        <form id="familyForm" class="space-y-6">
-            <!-- Data Kepala Keluarga -->
-            <div class="form-section">
-                <h2 class="text-2xl font-bold mb-4">👨‍👩‍👧‍👦 Data Kepala Keluarga</h2>
+        <form id="tbcForm" class="space-y-6">
+            <!-- Data Dasar -->
+            <div class="form-section text-white">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    🏠 Data Dasar Kunjungan
+                </h2>
                 
-                <div class="input-group">
-                    <label class="block text-sm font-medium mb-2">Nama Kepala Keluarga</label>
-                    <input type="text" id="namaKepalaKeluarga" required 
-                           class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Nama Desa</label>
+                        <select name="namaDesa" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih Desa</option>
+                            <option value="Desa Ganra">Desa Ganra</option>
+                            <option value="Desa Enrekeng">Desa Enrekeng</option>
+                            <option value="Desa Belo">Desa Belo</option>
+                            <option value="Desa Lompulle">Desa Lompulle</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Nama Posyandu</label>
+                        <input type="text" name="namaPosyandu" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Nama Kader</label>
+                        <input type="text" name="namaKader" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Tanggal Kunjungan</label>
+                        <input type="date" name="tanggalKunjungan" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                    </div>
                 </div>
-
-                <div class="input-group">
-                    <label class="block text-sm font-medium mb-2">Alamat</label>
-                    <textarea id="alamat" required rows="3"
-                              class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400"></textarea>
+                
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Nama Kepala Keluarga</label>
+                        <input type="text" name="namaKepalaKeluarga" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label class="block text-sm font-medium mb-2">Alamat</label>
+                        <input type="text" name="alamat" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                    </div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                
+                <div class="grid md:grid-cols-3 gap-4 mt-4">
                     <div class="input-group">
                         <label class="block text-sm font-medium mb-2">Jumlah Anggota Keluarga</label>
-                        <input type="number" id="jumlahAnggota" min="1" required
-                               class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
+                        <input type="number" name="jumlahAnggotaKeluarga" min="1" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
                     </div>
+                    
                     <div class="input-group">
                         <label class="block text-sm font-medium mb-2">Jumlah Hamil</label>
-                        <input type="number" id="jumlahHamil" min="0" value="0"
-                               class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
+                        <input type="number" name="jumlahHamil" min="0" class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
                     </div>
+                    
                     <div class="input-group">
                         <label class="block text-sm font-medium mb-2">Jumlah Tidak Hamil</label>
-                        <input type="number" id="jumlahTidakHamil" min="0" value="0"
-                               class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
+                        <input type="number" name="jumlahTidakHamil" min="0" class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
                     </div>
-                </div>
-
-                <div class="input-group">
-                    <label class="block text-sm font-medium mb-2">Tanggal Kunjungan Rumah</label>
-                    <input type="date" id="tanggalKunjungan" required
-                           class="w-full px-4 py-2 rounded-lg border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
                 </div>
             </div>
 
             <!-- Data Anggota Keluarga -->
-            <div class="form-section">
+            <div class="form-section text-white">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-2xl font-bold">👥 Data Anggota Keluarga</h2>
-                    <button type="button" id="addMember" 
-                            class="btn-secondary px-4 py-2 rounded-lg font-medium text-white hover:opacity-90">
+                    <h2 class="text-xl font-semibold flex items-center">
+                        👥 Data Anggota Keluarga
+                    </h2>
+                    <button type="button" id="tambahAnggota" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         + Tambah Anggota
                     </button>
                 </div>
                 
-                <div id="familyMembers">
+                <div id="anggotaContainer">
                     <!-- Anggota keluarga akan ditambahkan di sini -->
                 </div>
             </div>
 
             <!-- Tombol Submit -->
             <div class="text-center">
-                <button type="submit" 
-                        class="btn-primary px-8 py-3 rounded-lg font-bold text-white text-lg hover:opacity-90">
+                <button type="submit" class="btn-primary text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg">
                     📤 Kirim Data ke Spreadsheet
                 </button>
             </div>
         </form>
 
         <!-- Status -->
-        <div id="status" class="mt-6 text-center"></div>
+        <div id="status" class="mt-6 text-center hidden">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
+                <span id="statusMessage"></span>
+            </div>
+        </div>
     </div>
 
     <script>
-        let memberCount = 0;
+        let anggotaCount = 0;
 
-        // Set tanggal hari ini sebagai default
-        document.getElementById('tanggalKunjungan').value = new Date().toISOString().split('T')[0];
-
-        // Tambah anggota keluarga
-        document.getElementById('addMember').addEventListener('click', function() {
-            memberCount++;
-            const memberDiv = document.createElement('div');
-            memberDiv.className = 'member-card';
-            memberDiv.innerHTML = `
-                <div class="flex justify-between items-center mb-3">
-                    <h3 class="text-lg font-bold">Anggota Keluarga ${memberCount}</h3>
-                    <button type="button" onclick="removeMember(this)" 
-                            class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm">
-                        Hapus
-                    </button>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Nama Anggota Keluarga</label>
-                        <input type="text" name="namaAnggota_${memberCount}" required
-                               class="w-full px-3 py-2 rounded border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
+        // Template untuk anggota keluarga
+        function createAnggotaTemplate(index) {
+            return `
+                <div class="anggota-card" data-index="${index}">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-gray-800">Anggota Keluarga ${index + 1}</h3>
+                        <button type="button" class="hapus-anggota text-red-500 hover:text-red-700" data-index="${index}">
+                            🗑️ Hapus
+                        </button>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Umur (Tahun)</label>
-                        <input type="number" name="umur_${memberCount}" min="0" required
-                               class="w-full px-3 py-2 rounded border-0 text-gray-800 focus:ring-2 focus:ring-blue-400">
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Jenis Kelamin</label>
-                    <div class="flex gap-4">
-                        <label class="flex items-center">
-                            <input type="radio" name="jenisKelamin_${memberCount}" value="Laki-Laki" required class="mr-2">
-                            Laki-Laki
-                        </label>
-                        <label class="flex items-center">
-                            <input type="radio" name="jenisKelamin_${memberCount}" value="Perempuan" required class="mr-2">
-                            Perempuan
-                        </label>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="font-bold mb-2">🔍 Skrining TBC</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    
+                    <div class="grid md:grid-cols-3 gap-3 mb-3">
                         <div>
-                            <label class="block text-sm mb-1">Batuk Menerus > 2 Minggu</label>
-                            <select name="batukMenerus_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+                            <input type="text" name="anggota[${index}][nama]" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Umur (Tahun)</label>
+                            <input type="number" name="anggota[${index}][umur]" min="0" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
+                            <select name="anggota[${index}][jenisKelamin]" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
+                                <option value="">Pilih</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Skrining TBC -->
+                    <div class="mb-3">
+                        <h4 class="font-medium text-gray-800 mb-2">🔍 Skrining TBC</h4>
+                        <div class="grid md:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Batuk Menerus >2 Minggu</label>
+                                <select name="anggota[${index}][batukMenerus]" class="w-full p-2 rounded border text-gray-800">
+                                    <option value="">Pilih</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Demam >2 Minggu</label>
+                                <select name="anggota[${index}][demam]" class="w-full p-2 rounded border text-gray-800">
+                                    <option value="">Pilih</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">BB Turun 3 Bulan Berturut</label>
+                                <select name="anggota[${index}][bbTurun]" class="w-full p-2 rounded border text-gray-800">
+                                    <option value="">Pilih</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Kontak Erat Pasien TBC</label>
+                                <input type="text" name="anggota[${index}][kontakErat]" placeholder="Keluarga/Tetangga/ART" class="w-full p-2 rounded border text-gray-800">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Diagnosis dan Pemeriksaan -->
+                    <div class="grid md:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Terdiagnosa TBC (Tanggal)</label>
+                            <input type="date" name="anggota[${index}][diagnosaTanggal]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Tempat Diagnosa</label>
+                            <input type="text" name="anggota[${index}][diagnosaTempat]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Pemeriksaan Terakhir (Tanggal)</label>
+                            <input type="date" name="anggota[${index}][pemeriksaanTanggal]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Tempat Pemeriksaan</label>
+                            <input type="text" name="anggota[${index}][pemeriksaanTempat]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
+                    </div>
+
+                    <!-- Obat dan PMO -->
+                    <div class="grid md:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Ada Obat TBC</label>
+                            <select name="anggota[${index}][adaObat]" class="w-full p-2 rounded border text-gray-800">
                                 <option value="">Pilih</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm mb-1">Demam > 2 Minggu</label>
-                            <select name="demam_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
+                            <label class="block text-sm text-gray-700 mb-1">Sudah Minum Obat Hari Ini</label>
+                            <select name="anggota[${index}][minumObat]" class="w-full p-2 rounded border text-gray-800">
                                 <option value="">Pilih</option>
                                 <option value="Ya">Ya</option>
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm mb-1">BB Tidak Naik/Turun 3 Bulan</label>
-                            <select name="beratBadan_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
+                            <label class="block text-sm text-gray-700 mb-1">Nama PMO</label>
+                            <input type="text" name="anggota[${index}][namaPMO]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Perilaku Merokok</label>
+                            <select name="anggota[${index}][merokok]" class="w-full p-2 rounded border text-gray-800">
                                 <option value="">Pilih</option>
-                                <option value="Ya">Ya</option>
-                                <option value="Tidak">Tidak</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm mb-1">Kontak Erat Pasien TBC</label>
-                            <select name="kontakErat_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Keluarga">Keluarga</option>
-                                <option value="Tetangga">Tetangga</option>
-                                <option value="ART">ART</option>
-                                <option value="Tidak Ada">Tidak Ada</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="font-bold mb-2">🏥 Diagnosis TBC</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm mb-1">Tanggal Diagnosis</label>
-                            <input type="date" name="tanggalDiagnosis_${memberCount}"
-                                   class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm mb-1">Tempat Diagnosis</label>
-                            <input type="text" name="tempatDiagnosis_${memberCount}"
-                                   class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="font-bold mb-2">🔬 Pemeriksaan Terakhir</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm mb-1">Tanggal Pemeriksaan</label>
-                            <input type="date" name="tanggalPemeriksaan_${memberCount}"
-                                   class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm mb-1">Tempat Pemeriksaan</label>
-                            <input type="text" name="tempatPemeriksaan_${memberCount}"
-                                   class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h4 class="font-bold mb-2">💊 Obat TBC</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm mb-1">Ada Obat</label>
-                            <select name="adaObat_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Ya">Ya</option>
-                                <option value="Tidak">Tidak</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm mb-1">Sudah Minum Obat Hari Ini</label>
-                            <select name="minumObat_${memberCount}" required
-                                    class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Ya">Ya</option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Pasif">Pasif</option>
                                 <option value="Tidak">Tidak</option>
                             </select>
                         </div>
                     </div>
-                </div>
 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">👨‍⚕️ Nama PMO (Pengawas Minum Obat)</label>
-                    <input type="text" name="namaPMO_${memberCount}"
-                           class="w-full px-3 py-2 rounded border-0 text-gray-800">
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">🚬 Perilaku Merokok</label>
-                    <div class="flex gap-4">
-                        <label class="flex items-center">
-                            <input type="radio" name="perilakuMerokok_${memberCount}" value="Aktif" required class="mr-2">
-                            Aktif
-                        </label>
-                        <label class="flex items-center">
-                            <input type="radio" name="perilakuMerokok_${memberCount}" value="Pasif" required class="mr-2">
-                            Pasif
-                        </label>
-                        <label class="flex items-center">
-                            <input type="radio" name="perilakuMerokok_${memberCount}" value="Tidak" required class="mr-2">
-                            Tidak
-                        </label>
+                    <!-- Tindakan -->
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Pemberian Edukasi</label>
+                            <textarea name="anggota[${index}][edukasi]" rows="2" class="w-full p-2 rounded border text-gray-800" placeholder="Catatan edukasi yang diberikan"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Mengingatkan Periksa</label>
+                            <textarea name="anggota[${index}][mengingatkanPeriksa]" rows="2" class="w-full p-2 rounded border text-gray-800" placeholder="Pustu/Puskesmas/Fasyankes"></textarea>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-gray-700 mb-1">Rujukan ke Nakes (Tanggal)</label>
+                            <input type="date" name="anggota[${index}][rujukanTanggal]" class="w-full p-2 rounded border text-gray-800">
+                        </div>
                     </div>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">📚 Pemberian Edukasi</label>
-                    <textarea name="pemberianEdukasi_${memberCount}" rows="2"
-                              class="w-full px-3 py-2 rounded border-0 text-gray-800"></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">⏰ Mengingatkan Periksa ke Pustu/Puskesmas/Fasyankes</label>
-                    <textarea name="mengingatkanPeriksa_${memberCount}" rows="2"
-                              class="w-full px-3 py-2 rounded border-0 text-gray-800"></textarea>
-                </div>
-
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-1">🏥 Tanggal Rujukan ke Nakes</label>
-                    <input type="date" name="tanggalRujukan_${memberCount}"
-                           class="w-full px-3 py-2 rounded border-0 text-gray-800">
                 </div>
             `;
-            document.getElementById('familyMembers').appendChild(memberDiv);
+        }
+
+        // Tambah anggota keluarga
+        document.getElementById('tambahAnggota').addEventListener('click', function() {
+            const container = document.getElementById('anggotaContainer');
+            container.insertAdjacentHTML('beforeend', createAnggotaTemplate(anggotaCount));
+            anggotaCount++;
         });
 
         // Hapus anggota keluarga
-        function removeMember(button) {
-            button.closest('.member-card').remove();
-        }
-
-        // Tambah anggota pertama secara otomatis
-        document.getElementById('addMember').click();
-
-        // Submit form
-        document.getElementById('familyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const statusDiv = document.getElementById('status');
-            statusDiv.innerHTML = '<div class="bg-blue-500 text-white px-4 py-2 rounded-lg">📤 Mengirim data ke spreadsheet...</div>';
-
-            // Kumpulkan semua data
-            const formData = new FormData(this);
-            const data = {
-                namaKepalaKeluarga: document.getElementById('namaKepalaKeluarga').value,
-                alamat: document.getElementById('alamat').value,
-                jumlahAnggota: document.getElementById('jumlahAnggota').value,
-                jumlahHamil: document.getElementById('jumlahHamil').value,
-                jumlahTidakHamil: document.getElementById('jumlahTidakHamil').value,
-                tanggalKunjungan: document.getElementById('tanggalKunjungan').value,
-                anggotaKeluarga: []
-            };
-
-            // Kumpulkan data anggota keluarga
-            const memberCards = document.querySelectorAll('.member-card');
-            memberCards.forEach((card, index) => {
-                const memberNumber = index + 1;
-                const memberData = {
-                    nama: formData.get(`namaAnggota_${memberNumber}`) || '',
-                    umur: formData.get(`umur_${memberNumber}`) || '',
-                    jenisKelamin: formData.get(`jenisKelamin_${memberNumber}`) || '',
-                    batukMenerus: formData.get(`batukMenerus_${memberNumber}`) || '',
-                    demam: formData.get(`demam_${memberNumber}`) || '',
-                    beratBadan: formData.get(`beratBadan_${memberNumber}`) || '',
-                    kontakErat: formData.get(`kontakErat_${memberNumber}`) || '',
-                    tanggalDiagnosis: formData.get(`tanggalDiagnosis_${memberNumber}`) || '',
-                    tempatDiagnosis: formData.get(`tempatDiagnosis_${memberNumber}`) || '',
-                    tanggalPemeriksaan: formData.get(`tanggalPemeriksaan_${memberNumber}`) || '',
-                    tempatPemeriksaan: formData.get(`tempatPemeriksaan_${memberNumber}`) || '',
-                    adaObat: formData.get(`adaObat_${memberNumber}`) || '',
-                    minumObat: formData.get(`minumObat_${memberNumber}`) || '',
-                    namaPMO: formData.get(`namaPMO_${memberNumber}`) || '',
-                    perilakuMerokok: formData.get(`perilakuMerokok_${memberNumber}`) || '',
-                    pemberianEdukasi: formData.get(`pemberianEdukasi_${memberNumber}`) || '',
-                    mengingatkanPeriksa: formData.get(`mengingatkanPeriksa_${memberNumber}`) || '',
-                    tanggalRujukan: formData.get(`tanggalRujukan_${memberNumber}`) || ''
-                };
-                data.anggotaKeluarga.push(memberData);
-            });
-
-            // Kirim data ke Google Apps Script
-            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxL54Sb-3TlNYbF19qWxlHgFTYZiqL2XD-AzZlZOYFn0Hxr2TuVn-4TdL8EfrZ7B9k/exec';
-            
-            // Menggunakan fetch dengan mode no-cors untuk Google Apps Script
-            fetch(APPS_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(() => {
-                // Karena mode no-cors, kita tidak bisa membaca response
-                // Tapi request sudah terkirim ke Google Apps Script
-                statusDiv.innerHTML = `
-                    <div class="bg-green-500 text-white px-4 py-2 rounded-lg mb-4 animate-pulse">
-                        ✅ Data berhasil dikirim ke Google Spreadsheet!
-                    </div>
-                    <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm">
-                        📊 <strong>Data yang dikirim:</strong>
-                        <br>• Kepala Keluarga: ${data.namaKepalaKeluarga}
-                        <br>• Jumlah Anggota: ${data.anggotaKeluarga.length} orang
-                        <br>• Tanggal Kunjungan: ${data.tanggalKunjungan}
-                        <br>• Status: Tersimpan di spreadsheet Anda
-                    </div>
-                `;
-                
-                // Reset form setelah berhasil kirim
-                setTimeout(() => {
-                    this.reset();
-                    document.getElementById('familyMembers').innerHTML = '';
-                    memberCount = 0;
-                    document.getElementById('addMember').click();
-                    document.getElementById('tanggalKunjungan').value = new Date().toISOString().split('T')[0];
-                    
-                    statusDiv.innerHTML = `
-                        <div class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-sm">
-                            📝 Form telah direset. Siap untuk entri data berikutnya.
-                        </div>
-                    `;
-                }, 3000);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                statusDiv.innerHTML = `
-                    <div class="bg-red-500 text-white px-4 py-2 rounded-lg mb-4">
-                        ❌ Terjadi kesalahan saat mengirim data ke spreadsheet
-                    </div>
-                    <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg text-sm">
-                        🔧 <strong>Kemungkinan penyebab:</strong>
-                        <br>• Koneksi internet bermasalah
-                        <br>• Google Apps Script belum dikonfigurasi dengan benar
-                        <br>• URL Apps Script tidak valid
-                        <br><br>Silakan coba lagi atau periksa konfigurasi Apps Script Anda.
-                    </div>
-                `;
-            });
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('hapus-anggota') || e.target.parentElement.classList.contains('hapus-anggota')) {
+                const button = e.target.classList.contains('hapus-anggota') ? e.target : e.target.parentElement;
+                const index = button.getAttribute('data-index');
+                const anggotaCard = document.querySelector(`[data-index="${index}"]`);
+                anggotaCard.remove();
+            }
         });
 
-        // Auto-calculate jumlah tidak hamil
-        document.getElementById('jumlahAnggota').addEventListener('input', updateTidakHamil);
-        document.getElementById('jumlahHamil').addEventListener('input', updateTidakHamil);
+        // Tambah anggota pertama secara otomatis
+        document.getElementById('tambahAnggota').click();
 
-        function updateTidakHamil() {
-            const total = parseInt(document.getElementById('jumlahAnggota').value) || 0;
-            const hamil = parseInt(document.getElementById('jumlahHamil').value) || 0;
-            document.getElementById('jumlahTidakHamil').value = Math.max(0, total - hamil);
+        // Submit form
+        document.getElementById('tbcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Ambil data dasar
+            for (let [key, value] of formData.entries()) {
+                if (!key.startsWith('anggota[')) {
+                    data[key] = value;
+                }
+            }
+            
+            // Buat keterangan kehamilan
+            const jumlahHamil = data.jumlahHamil || 0;
+            const jumlahTidakHamil = data.jumlahTidakHamil || 0;
+            data.keteranganKehamilan = `Hamil: ${jumlahHamil}, Tidak Hamil: ${jumlahTidakHamil}`;
+            
+            // Ambil data anggota keluarga dan kirim satu per satu
+            const anggotaCards = document.querySelectorAll('.anggota-card');
+            
+            if (anggotaCards.length === 0) {
+                // Jika tidak ada anggota, kirim data dasar saja
+                kirimKeSpreadsheet(data);
+            } else {
+                // Kirim data untuk setiap anggota keluarga
+                anggotaCards.forEach((card, index) => {
+                    const anggotaData = {...data}; // Copy data dasar
+                    const inputs = card.querySelectorAll('input, select, textarea');
+                    
+                    inputs.forEach(input => {
+                        const name = input.name.replace(`anggota[${card.dataset.index}][`, '').replace(']', '');
+                        
+                        // Sesuaikan nama field dengan yang diharapkan Apps Script
+                        switch(name) {
+                            case 'nama':
+                                anggotaData.namaAnggota = input.value;
+                                break;
+                            case 'bbTurun':
+                                anggotaData.beratBadan = input.value;
+                                break;
+                            case 'diagnosaTanggal':
+                                anggotaData.tanggalDiagnosa = input.value;
+                                break;
+                            case 'diagnosaTempat':
+                                anggotaData.tempatDiagnosa = input.value;
+                                break;
+                            case 'pemeriksaanTanggal':
+                                anggotaData.tanggalPemeriksaan = input.value;
+                                break;
+                            case 'pemeriksaanTempat':
+                                anggotaData.tempatPemeriksaan = input.value;
+                                break;
+                            case 'rujukanTanggal':
+                                anggotaData.tanggalRujukan = input.value;
+                                break;
+                            case 'edukasi':
+                            case 'mengingatkanPeriksa':
+                                // Gabungkan edukasi dan mengingatkan periksa menjadi tindakan
+                                if (!anggotaData.tindakan) anggotaData.tindakan = '';
+                                if (input.value) {
+                                    anggotaData.tindakan += (anggotaData.tindakan ? '; ' : '') + 
+                                        (name === 'edukasi' ? 'Edukasi: ' : 'Mengingatkan Periksa: ') + input.value;
+                                }
+                                break;
+                            case 'batukMenerus':
+                                anggotaData.batukMenerus = input.value;
+                                break;
+                            case 'merokok':
+                                anggotaData.perilakuMerokok = input.value;
+                                break;
+                            default:
+                                anggotaData[name] = input.value;
+                        }
+                    });
+                    
+                    // Kirim data untuk anggota ini
+                    setTimeout(() => {
+                        kirimKeSpreadsheet(anggotaData, index === anggotaCards.length - 1);
+                    }, index * 500); // Delay untuk menghindari konflik
+                });
+            }
+        });
+
+        function kirimKeSpreadsheet(data, isLast = true) {
+            const status = document.getElementById('status');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // Tampilkan loading hanya untuk pengiriman pertama
+            if (!status.classList.contains('bg-blue-100')) {
+                status.classList.remove('hidden');
+                status.className = 'mt-6 text-center bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg';
+                statusMessage.textContent = 'Mengirim data ke spreadsheet...';
+            }
+
+            // URL Google Apps Script Web App
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyyboG0fLYW1iIlK7Z66Zs2fPgXw667PN2TFxBvPqPWCRoY9nTLy89QyLrTiVc80gEA9Q/exec';
+            
+            // Buat URL dengan parameter untuk kompatibilitas dengan Apps Script
+            const params = new URLSearchParams();
+            Object.keys(data).forEach(key => {
+                if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+                    params.append(key, data[key]);
+                }
+            });
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                mode: 'no-cors',
+                body: params.toString()
+            })
+            .then(() => {
+                // Tampilkan sukses hanya untuk pengiriman terakhir
+                if (isLast) {
+                    status.className = 'mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg';
+                    statusMessage.textContent = '✅ Semua data berhasil dikirim ke spreadsheet!';
+                    
+                    // Reset form setelah 3 detik
+                    setTimeout(() => {
+                        document.getElementById('tbcForm').reset();
+                        document.getElementById('anggotaContainer').innerHTML = '';
+                        anggotaCount = 0;
+                        document.getElementById('tambahAnggota').click();
+                        status.classList.add('hidden');
+                    }, 3000);
+                }
+            })
+            .catch(error => {
+                console.log('Fetch gagal untuk data:', data);
+                
+                if (isLast) {
+                    // Coba metode alternatif untuk pengiriman terakhir
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = scriptURL;
+                    form.target = '_blank';
+                    form.style.display = 'none';
+                    
+                    Object.keys(data).forEach(key => {
+                        if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = data[key];
+                            form.appendChild(input);
+                        }
+                    });
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                    document.body.removeChild(form);
+                    
+                    status.className = 'mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg';
+                    statusMessage.textContent = '✅ Data dikirim! Cek tab baru untuk konfirmasi.';
+                    
+                    setTimeout(() => {
+                        document.getElementById('tbcForm').reset();
+                        document.getElementById('anggotaContainer').innerHTML = '';
+                        anggotaCount = 0;
+                        document.getElementById('tambahAnggota').click();
+                        status.classList.add('hidden');
+                    }, 3000);
+                }
+            });
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97ff4559048b9ca5',t:'MTc1ODAxNDI0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984908351249ce29',t:'MTc1ODc4NzY5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
