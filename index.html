@@ -3,472 +3,818 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checklist Kunjungan Rumah - Pengendalian TBC</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pendataan Keluarga Posyandu</title>
     <style>
         body {
             box-sizing: border-box;
-        }
-        .form-section {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
         }
-        .input-group {
-            margin-bottom: 16px;
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            transition: all 0.3s ease;
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 30px;
+            text-align: center;
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
         }
-        .anggota-card {
-            background: rgba(255,255,255,0.95);
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
             border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-left: 4px solid #4f46e5;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-item input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .anggota-keluarga {
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+        }
+
+        .anggota-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .anggota-header h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .btn-add {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn-add:hover {
+            background: #218838;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .conditional-field {
+            margin-left: 20px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .info-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #bee5eb;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .row, .row-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">📋 Checklist Kunjungan Rumah</h1>
-            <p class="text-lg text-gray-600">Pengendalian Penyakit Menular (TBC)</p>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Pendataan Keluarga Posyandu</h1>
+            <p>Sistem Informasi Kesehatan Keluarga</p>
         </div>
-
-        <form id="tbcForm" class="space-y-6">
-            <!-- Data Dasar -->
-            <div class="form-section text-white">
-                <h2 class="text-xl font-semibold mb-4 flex items-center">
-                    🏠 Data Dasar Kunjungan
-                </h2>
-                
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Nama Desa</label>
-                        <select name="namaDesa" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                            <option value="">Pilih Desa</option>
-                            <option value="Desa Ganra">Desa Ganra</option>
-                            <option value="Desa Enrekeng">Desa Enrekeng</option>
-                            <option value="Desa Belo">Desa Belo</option>
-                            <option value="Desa Lompulle">Desa Lompulle</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Nama Posyandu</label>
-                        <input type="text" name="namaPosyandu" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Nama Kader</label>
-                        <input type="text" name="namaKader" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Tanggal Kunjungan</label>
-                        <input type="date" name="tanggalKunjungan" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-2 gap-4 mt-4">
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Nama Kepala Keluarga</label>
-                        <input type="text" name="namaKepalaKeluarga" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Alamat</label>
-                        <input type="text" name="alamat" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-4 mt-4">
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Jumlah Anggota Keluarga</label>
-                        <input type="number" name="jumlahAnggotaKeluarga" min="1" required class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Jumlah Hamil</label>
-                        <input type="number" name="jumlahHamil" min="0" class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label class="block text-sm font-medium mb-2">Jumlah Tidak Hamil</label>
-                        <input type="number" name="jumlahTidakHamil" min="0" class="w-full p-3 rounded-lg border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                    </div>
-                </div>
+        
+        <div class="form-container">
+            <div class="info-message">
+                <strong>📝 Petunjuk:</strong> Isi semua data yang diperlukan, kemudian klik "Kirim Data ke Spreadsheet" untuk menyimpan ke Google Sheets.
             </div>
 
-            <!-- Data Anggota Keluarga -->
-            <div class="form-section text-white">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold flex items-center">
-                        👥 Data Anggota Keluarga
-                    </h2>
-                    <button type="button" id="tambahAnggota" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                        + Tambah Anggota
-                    </button>
-                </div>
-                
-                <div id="anggotaContainer">
-                    <!-- Anggota keluarga akan ditambahkan di sini -->
-                </div>
+            <div class="success-message" id="successMessage">
+                ✅ Data berhasil dikirim ke spreadsheet!
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                ❌ Terjadi kesalahan saat mengirim data. Silakan coba lagi.
             </div>
 
-            <!-- Tombol Submit -->
-            <div class="text-center">
-                <button type="submit" class="btn-primary text-white px-8 py-4 rounded-lg text-lg font-semibold shadow-lg">
+            <form id="dataForm">
+                <!-- Data Lokasi -->
+                <div class="form-group">
+                    <label for="desa">Nama Desa *</label>
+                    <select id="desa" name="desa" required>
+                        <option value="">Pilih Desa</option>
+                        <option value="Desa Ganra">Desa Ganra</option>
+                        <option value="Desa Belo">Desa Belo</option>
+                        <option value="Desa Enrekeng">Desa Enrekeng</option>
+                        <option value="Desa Lompulle">Desa Lompulle</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="posyandu">Nama Posyandu *</label>
+                    <select id="posyandu" name="posyandu" required>
+                        <option value="">Pilih Posyandu</option>
+                        <option value="Bakke I">Bakke I</option>
+                        <option value="Bakke II">Bakke II</option>
+                        <option value="Atasya I">Atasya I</option>
+                        <option value="Atasya II">Atasya II</option>
+                        <option value="Paomallimpoe">Paomallimpoe</option>
+                        <option value="Batumemmanae">Batumemmanae</option>
+                        <option value="Mannagae">Mannagae</option>
+                        <option value="Cennoe">Cennoe</option>
+                        <option value="Belo">Belo</option>
+                        <option value="Enrekeng I">Enrekeng I</option>
+                        <option value="Enrekeng II">Enrekeng II</option>
+                        <option value="Mannennungeng">Mannennungeng</option>
+                        <option value="Mappesonae">Mappesonae</option>
+                        <option value="Sipatuo">Sipatuo</option>
+                        <option value="Masengereng">Masengereng</option>
+                        <option value="Sipatokkong">Sipatokkong</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="namaKader">Nama Kader *</label>
+                        <input type="text" id="namaKader" name="namaKader" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomorRT">Nomor RT *</label>
+                        <input type="number" id="nomorRT" name="nomorRT" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="nomorKK">Nomor Kartu Keluarga *</label>
+                        <input type="text" id="nomorKK" name="nomorKK" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomorTelepon">Nomor Telepon *</label>
+                        <input type="tel" id="nomorTelepon" name="nomorTelepon" required>
+                    </div>
+                </div>
+
+                <!-- Data Kepala Keluarga -->
+                <h3 style="color: #4CAF50; margin-top: 30px; margin-bottom: 20px;">👨‍👩‍👧‍👦 Data Kepala Keluarga</h3>
+                
+                <div class="row-3">
+                    <div class="form-group">
+                        <label for="namaKepala">Nama Kepala Keluarga *</label>
+                        <input type="text" id="namaKepala" name="namaKepala" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nikKepala">NIK Kepala Keluarga *</label>
+                        <input type="text" id="nikKepala" name="nikKepala" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggalLahirKepala">Tanggal Lahir *</label>
+                        <input type="date" id="tanggalLahirKepala" name="tanggalLahirKepala" required>
+                    </div>
+                </div>
+
+                <!-- Data Anggota Keluarga -->
+                <h3 style="color: #4CAF50; margin-top: 30px; margin-bottom: 20px;">👥 Data Anggota Keluarga Lain</h3>
+                
+                <div id="anggotaKeluargaContainer"></div>
+                
+                <button type="button" class="btn-add" onclick="tambahAnggotaKeluarga()">
+                    ➕ Tambah Anggota Keluarga
+                </button>
+
+                <!-- Sarana Air Bersih -->
+                <h3 style="color: #4CAF50; margin-top: 30px; margin-bottom: 20px;">💧 Sarana Air Bersih</h3>
+                
+                <div class="form-group">
+                    <label>Apakah tersedia sarana air bersih? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="airBersihYa" name="airBersih" value="Ya" onchange="toggleAirBersih()">
+                            <label for="airBersihYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="airBersihTidak" name="airBersih" value="Tidak" onchange="toggleAirBersih()">
+                            <label for="airBersihTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="sumberAirContainer" class="conditional-field" style="display: none;">
+                    <div class="form-group">
+                        <label>Apakah sumber air terlindung? *</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="sumberAirTerlindung" name="sumberAir" value="Terlindung" onchange="toggleSumberAir()">
+                                <label for="sumberAirTerlindung">Ya (Terlindung)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="sumberAirTidakTerlindung" name="sumberAir" value="Tidak Terlindung" onchange="toggleSumberAir()">
+                                <label for="sumberAirTidakTerlindung">Tidak (Tidak Terlindung)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="jenisSumberAir" style="display: none;">
+                        <div class="form-group">
+                            <label>Jenis Sumber Air:</label>
+                            <select id="jenisSumber" name="jenisSumber">
+                                <option value="">Pilih Jenis Sumber Air</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jamban Keluarga -->
+                <h3 style="color: #4CAF50; margin-top: 30px; margin-bottom: 20px;">🚽 Jamban Keluarga</h3>
+                
+                <div class="form-group">
+                    <label>Apakah tersedia jamban keluarga? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="jambanYa" name="jamban" value="Ya" onchange="toggleJamban()">
+                            <label for="jambanYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="jambanTidak" name="jamban" value="Tidak" onchange="toggleJamban()">
+                            <label for="jambanTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="jambanSaniterContainer" class="conditional-field" style="display: none;">
+                    <div class="form-group">
+                        <label>Apakah jamban saniter? *</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="jambanSaniterYa" name="jambanSaniter" value="Saniter" onchange="toggleJambanSaniter()">
+                                <label for="jambanSaniterYa">Ya (Saniter)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="jambanSaniterTidak" name="jambanSaniter" value="Tidak Saniter" onchange="toggleJambanSaniter()">
+                                <label for="jambanSaniterTidak">Tidak (Cemplung)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="jenisJamban" style="display: none;">
+                        <div class="form-group">
+                            <label>Jenis Jamban:</label>
+                            <select id="jenisJambanSelect" name="jenisJamban">
+                                <option value="">Pilih Jenis Jamban</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kondisi Rumah dan Kesehatan -->
+                <h3 style="color: #4CAF50; margin-top: 30px; margin-bottom: 20px;">🏠 Kondisi Rumah dan Kesehatan</h3>
+                
+                <div class="form-group">
+                    <label>Apakah rumah memiliki ventilasi yang cukup? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="ventilasiYa" name="ventilasi" value="Ya">
+                            <label for="ventilasiYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="ventilasiTidak" name="ventilasi" value="Tidak">
+                            <label for="ventilasiTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Apakah terdapat jentik nyamuk? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="jentikYa" name="jentik" value="Ya">
+                            <label for="jentikYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="jentikTidak" name="jentik" value="Tidak">
+                            <label for="jentikTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Apakah keluarga memiliki minimal 3 jenis tanaman obat keluarga? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="tanamanObatYa" name="tanamanObat" value="Ya">
+                            <label for="tanamanObatYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="tanamanObatTidak" name="tanamanObat" value="Tidak">
+                            <label for="tanamanObatTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gangguan Jiwa -->
+                <div class="form-group">
+                    <label>Apakah ada anggota keluarga yang mengalami gangguan jiwa? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="gangguanJiwaYa" name="gangguanJiwa" value="Ya" onchange="toggleGangguanJiwa()">
+                            <label for="gangguanJiwaYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="gangguanJiwaTidak" name="gangguanJiwa" value="Tidak" onchange="toggleGangguanJiwa()">
+                            <label for="gangguanJiwaTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="namaGangguanJiwaContainer" class="conditional-field" style="display: none;">
+                    <div class="form-group">
+                        <label for="namaGangguanJiwa">Nama yang mengalami gangguan jiwa:</label>
+                        <input type="text" id="namaGangguanJiwa" name="namaGangguanJiwa">
+                    </div>
+                </div>
+
+                <!-- Penyakit -->
+                <div class="form-group">
+                    <label>Adakah anggota keluarga yang menderita penyakit berikut? *</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tbc" name="penyakit" value="TBC">
+                            <label for="tbc">TBC</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hipertensi" name="penyakit" value="Hipertensi">
+                            <label for="hipertensi">Hipertensi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="diabetes" name="penyakit" value="Diabetes Mellitus">
+                            <label for="diabetes">Diabetes Mellitus</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tidakAda" name="penyakit" value="Tidak Ada">
+                            <label for="tidakAda">Tidak Ada</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Merokok -->
+                <div class="form-group">
+                    <label>Adakah anggota keluarga yang merokok? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="merokokYa" name="merokok" value="Ya">
+                            <label for="merokokYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="merokokTidak" name="merokok" value="Tidak">
+                            <label for="merokokTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jaminan Kesehatan -->
+                <div class="form-group">
+                    <label>Apakah seluruh anggota keluarga memiliki Jaminan Kesehatan (JKN)? *</label>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" id="jknYa" name="jaminanKesehatan" value="Ya">
+                            <label for="jknYa">Ya</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio" id="jknTidak" name="jaminanKesehatan" value="Tidak">
+                            <label for="jknTidak">Tidak</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
                     📤 Kirim Data ke Spreadsheet
                 </button>
-            </div>
-        </form>
-
-        <!-- Status -->
-        <div id="status" class="mt-6 text-center hidden">
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg">
-                <span id="statusMessage"></span>
-            </div>
+            </form>
         </div>
     </div>
 
     <script>
-        let anggotaCount = 0;
+        let anggotaCounter = 0;
 
-        // Template untuk anggota keluarga
-        function createAnggotaTemplate(index) {
-            return `
-                <div class="anggota-card" data-index="${index}">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="font-semibold text-gray-800">Anggota Keluarga ${index + 1}</h3>
-                        <button type="button" class="hapus-anggota text-red-500 hover:text-red-700" data-index="${index}">
-                            🗑️ Hapus
-                        </button>
-                    </div>
-                    
-                    <div class="grid md:grid-cols-3 gap-3 mb-3">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
-                            <input type="text" name="anggota[${index}][nama]" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Umur (Tahun)</label>
-                            <input type="number" name="anggota[${index}][umur]" min="0" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Kelamin</label>
-                            <select name="anggota[${index}][jenisKelamin]" required class="w-full p-2 rounded border text-gray-800 focus:ring-2 focus:ring-blue-500">
-                                <option value="">Pilih</option>
-                                <option value="Laki-Laki">Laki-Laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
-                        </div>
-                    </div>
+        // Toggle functions untuk conditional fields
+        function toggleAirBersih() {
+            const airBersih = document.querySelector('input[name="airBersih"]:checked');
+            const container = document.getElementById('sumberAirContainer');
+            
+            if (airBersih && airBersih.value === 'Ya') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+                // Reset values
+                document.querySelectorAll('input[name="sumberAir"]').forEach(input => input.checked = false);
+                document.getElementById('jenisSumberAir').style.display = 'none';
+            }
+        }
 
-                    <!-- Skrining TBC -->
-                    <div class="mb-3">
-                        <h4 class="font-medium text-gray-800 mb-2">🔍 Skrining TBC</h4>
-                        <div class="grid md:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-sm text-gray-700 mb-1">Batuk Menerus >2 Minggu</label>
-                                <select name="anggota[${index}][batukMenerus]" class="w-full p-2 rounded border text-gray-800">
-                                    <option value="">Pilih</option>
-                                    <option value="Ya">Ya</option>
-                                    <option value="Tidak">Tidak</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-700 mb-1">Demam >2 Minggu</label>
-                                <select name="anggota[${index}][demam]" class="w-full p-2 rounded border text-gray-800">
-                                    <option value="">Pilih</option>
-                                    <option value="Ya">Ya</option>
-                                    <option value="Tidak">Tidak</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-700 mb-1">BB Turun 3 Bulan Berturut</label>
-                                <select name="anggota[${index}][bbTurun]" class="w-full p-2 rounded border text-gray-800">
-                                    <option value="">Pilih</option>
-                                    <option value="Ya">Ya</option>
-                                    <option value="Tidak">Tidak</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm text-gray-700 mb-1">Kontak Erat Pasien TBC</label>
-                                <input type="text" name="anggota[${index}][kontakErat]" placeholder="Keluarga/Tetangga/ART" class="w-full p-2 rounded border text-gray-800">
-                            </div>
-                        </div>
-                    </div>
+        function toggleSumberAir() {
+            const sumberAir = document.querySelector('input[name="sumberAir"]:checked');
+            const container = document.getElementById('jenisSumberAir');
+            const select = document.getElementById('jenisSumber');
+            
+            if (sumberAir) {
+                container.style.display = 'block';
+                
+                if (sumberAir.value === 'Terlindung') {
+                    select.innerHTML = `
+                        <option value="">Pilih Jenis Sumber Air</option>
+                        <option value="PDAM">PDAM</option>
+                        <option value="Sumur Pompa">Sumur Pompa</option>
+                        <option value="Sumur Gali Terlindung">Sumur Gali Terlindung</option>
+                        <option value="Mata Air Terlindung">Mata Air Terlindung</option>
+                    `;
+                } else {
+                    select.innerHTML = `
+                        <option value="">Pilih Jenis Sumber Air</option>
+                        <option value="Sumur Terbuka">Sumur Terbuka</option>
+                        <option value="Air Sungai">Air Sungai</option>
+                        <option value="Danau">Danau</option>
+                    `;
+                }
+            } else {
+                container.style.display = 'none';
+            }
+        }
 
-                    <!-- Diagnosis dan Pemeriksaan -->
-                    <div class="grid md:grid-cols-2 gap-3 mb-3">
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Terdiagnosa TBC (Tanggal)</label>
-                            <input type="date" name="anggota[${index}][diagnosaTanggal]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Tempat Diagnosa</label>
-                            <input type="text" name="anggota[${index}][diagnosaTempat]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Pemeriksaan Terakhir (Tanggal)</label>
-                            <input type="date" name="anggota[${index}][pemeriksaanTanggal]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Tempat Pemeriksaan</label>
-                            <input type="text" name="anggota[${index}][pemeriksaanTempat]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
-                    </div>
+        function toggleJamban() {
+            const jamban = document.querySelector('input[name="jamban"]:checked');
+            const container = document.getElementById('jambanSaniterContainer');
+            
+            if (jamban && jamban.value === 'Ya') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+                // Reset values
+                document.querySelectorAll('input[name="jambanSaniter"]').forEach(input => input.checked = false);
+                document.getElementById('jenisJamban').style.display = 'none';
+            }
+        }
 
-                    <!-- Obat dan PMO -->
-                    <div class="grid md:grid-cols-2 gap-3 mb-3">
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Ada Obat TBC</label>
-                            <select name="anggota[${index}][adaObat]" class="w-full p-2 rounded border text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Ya">Ya</option>
-                                <option value="Tidak">Tidak</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Sudah Minum Obat Hari Ini</label>
-                            <select name="anggota[${index}][minumObat]" class="w-full p-2 rounded border text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Ya">Ya</option>
-                                <option value="Tidak">Tidak</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Nama PMO</label>
-                            <input type="text" name="anggota[${index}][namaPMO]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Perilaku Merokok</label>
-                            <select name="anggota[${index}][merokok]" class="w-full p-2 rounded border text-gray-800">
-                                <option value="">Pilih</option>
-                                <option value="Aktif">Aktif</option>
-                                <option value="Pasif">Pasif</option>
-                                <option value="Tidak">Tidak</option>
-                            </select>
-                        </div>
-                    </div>
+        function toggleJambanSaniter() {
+            const jambanSaniter = document.querySelector('input[name="jambanSaniter"]:checked');
+            const container = document.getElementById('jenisJamban');
+            const select = document.getElementById('jenisJambanSelect');
+            
+            if (jambanSaniter) {
+                container.style.display = 'block';
+                
+                if (jambanSaniter.value === 'Saniter') {
+                    select.innerHTML = `
+                        <option value="">Pilih Jenis Jamban</option>
+                        <option value="Koleset">Koleset</option>
+                        <option value="Leher Angsa">Leher Angsa</option>
+                        <option value="Pelengsengan">Pelengsengan</option>
+                    `;
+                } else {
+                    select.innerHTML = `
+                        <option value="">Pilih Jenis Jamban</option>
+                        <option value="Cemplung">Cemplung</option>
+                    `;
+                }
+            } else {
+                container.style.display = 'none';
+            }
+        }
 
-                    <!-- Tindakan -->
-                    <div class="grid md:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Pemberian Edukasi</label>
-                            <textarea name="anggota[${index}][edukasi]" rows="2" class="w-full p-2 rounded border text-gray-800" placeholder="Catatan edukasi yang diberikan"></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-sm text-gray-700 mb-1">Mengingatkan Periksa</label>
-                            <textarea name="anggota[${index}][mengingatkanPeriksa]" rows="2" class="w-full p-2 rounded border text-gray-800" placeholder="Pustu/Puskesmas/Fasyankes"></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-sm text-gray-700 mb-1">Rujukan ke Nakes (Tanggal)</label>
-                            <input type="date" name="anggota[${index}][rujukanTanggal]" class="w-full p-2 rounded border text-gray-800">
-                        </div>
+        function toggleGangguanJiwa() {
+            const gangguanJiwa = document.querySelector('input[name="gangguanJiwa"]:checked');
+            const container = document.getElementById('namaGangguanJiwaContainer');
+            
+            if (gangguanJiwa && gangguanJiwa.value === 'Ya') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+                document.getElementById('namaGangguanJiwa').value = '';
+            }
+        }
+
+        function tambahAnggotaKeluarga() {
+            anggotaCounter++;
+            const container = document.getElementById('anggotaKeluargaContainer');
+            
+            const anggotaDiv = document.createElement('div');
+            anggotaDiv.className = 'anggota-keluarga';
+            anggotaDiv.id = `anggota-${anggotaCounter}`;
+            
+            anggotaDiv.innerHTML = `
+                <div class="anggota-header">
+                    <h4>Anggota Keluarga ${anggotaCounter}</h4>
+                    <button type="button" class="btn-remove" onclick="hapusAnggotaKeluarga(${anggotaCounter})">
+                        🗑️ Hapus
+                    </button>
+                </div>
+                <div class="row-3">
+                    <div class="form-group">
+                        <label for="namaAnggota${anggotaCounter}">Nama Lengkap</label>
+                        <input type="text" id="namaAnggota${anggotaCounter}" name="namaAnggota${anggotaCounter}">
+                    </div>
+                    <div class="form-group">
+                        <label for="nikAnggota${anggotaCounter}">NIK</label>
+                        <input type="text" id="nikAnggota${anggotaCounter}" name="nikAnggota${anggotaCounter}">
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggalLahirAnggota${anggotaCounter}">Tanggal Lahir</label>
+                        <input type="date" id="tanggalLahirAnggota${anggotaCounter}" name="tanggalLahirAnggota${anggotaCounter}">
                     </div>
                 </div>
             `;
+            
+            container.appendChild(anggotaDiv);
         }
 
-        // Tambah anggota keluarga
-        document.getElementById('tambahAnggota').addEventListener('click', function() {
-            const container = document.getElementById('anggotaContainer');
-            container.insertAdjacentHTML('beforeend', createAnggotaTemplate(anggotaCount));
-            anggotaCount++;
-        });
+        function hapusAnggotaKeluarga(id) {
+            const element = document.getElementById(`anggota-${id}`);
+            if (element) {
+                element.remove();
+            }
+        }
 
-        // Hapus anggota keluarga
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('hapus-anggota') || e.target.parentElement.classList.contains('hapus-anggota')) {
-                const button = e.target.classList.contains('hapus-anggota') ? e.target : e.target.parentElement;
-                const index = button.getAttribute('data-index');
-                const anggotaCard = document.querySelector(`[data-index="${index}"]`);
-                anggotaCard.remove();
+        // Handle checkbox "Tidak Ada" untuk penyakit
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'penyakit') {
+                const tidakAdaCheckbox = document.getElementById('tidakAda');
+                const otherCheckboxes = document.querySelectorAll('input[name="penyakit"]:not(#tidakAda)');
+                
+                if (e.target.id === 'tidakAda' && e.target.checked) {
+                    // Jika "Tidak Ada" dipilih, uncheck yang lain
+                    otherCheckboxes.forEach(cb => cb.checked = false);
+                } else if (e.target.checked && e.target.id !== 'tidakAda') {
+                    // Jika penyakit lain dipilih, uncheck "Tidak Ada"
+                    tidakAdaCheckbox.checked = false;
+                }
             }
         });
 
-        // Tambah anggota pertama secara otomatis
-        document.getElementById('tambahAnggota').click();
-
-        // Submit form
-        document.getElementById('tbcForm').addEventListener('submit', function(e) {
+        // Form submission
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Mengirim data...';
+            
+            // Collect form data
             const formData = new FormData(this);
             const data = {};
             
-            // Ambil data dasar
+            // Basic form data
             for (let [key, value] of formData.entries()) {
-                if (!key.startsWith('anggota[')) {
+                if (data[key]) {
+                    if (Array.isArray(data[key])) {
+                        data[key].push(value);
+                    } else {
+                        data[key] = [data[key], value];
+                    }
+                } else {
                     data[key] = value;
                 }
             }
             
-            // Buat keterangan kehamilan
-            const jumlahHamil = data.jumlahHamil || 0;
-            const jumlahTidakHamil = data.jumlahTidakHamil || 0;
-            data.keteranganKehamilan = `Hamil: ${jumlahHamil}, Tidak Hamil: ${jumlahTidakHamil}`;
-            
-            // Ambil data anggota keluarga dan kirim satu per satu
-            const anggotaCards = document.querySelectorAll('.anggota-card');
-            
-            if (anggotaCards.length === 0) {
-                // Jika tidak ada anggota, kirim data dasar saja
-                kirimKeSpreadsheet(data);
-            } else {
-                // Kirim data untuk setiap anggota keluarga
-                anggotaCards.forEach((card, index) => {
-                    const anggotaData = {...data}; // Copy data dasar
-                    const inputs = card.querySelectorAll('input, select, textarea');
-                    
-                    inputs.forEach(input => {
-                        const name = input.name.replace(`anggota[${card.dataset.index}][`, '').replace(']', '');
-                        
-                        // Sesuaikan nama field dengan yang diharapkan Apps Script
-                        switch(name) {
-                            case 'nama':
-                                anggotaData.namaAnggota = input.value;
-                                break;
-                            case 'bbTurun':
-                                anggotaData.beratBadan = input.value;
-                                break;
-                            case 'diagnosaTanggal':
-                                anggotaData.tanggalDiagnosa = input.value;
-                                break;
-                            case 'diagnosaTempat':
-                                anggotaData.tempatDiagnosa = input.value;
-                                break;
-                            case 'pemeriksaanTanggal':
-                                anggotaData.tanggalPemeriksaan = input.value;
-                                break;
-                            case 'pemeriksaanTempat':
-                                anggotaData.tempatPemeriksaan = input.value;
-                                break;
-                            case 'rujukanTanggal':
-                                anggotaData.tanggalRujukan = input.value;
-                                break;
-                            case 'edukasi':
-                            case 'mengingatkanPeriksa':
-                                // Gabungkan edukasi dan mengingatkan periksa menjadi tindakan
-                                if (!anggotaData.tindakan) anggotaData.tindakan = '';
-                                if (input.value) {
-                                    anggotaData.tindakan += (anggotaData.tindakan ? '; ' : '') + 
-                                        (name === 'edukasi' ? 'Edukasi: ' : 'Mengingatkan Periksa: ') + input.value;
-                                }
-                                break;
-                            case 'batukMenerus':
-                                anggotaData.batukMenerus = input.value;
-                                break;
-                            case 'merokok':
-                                anggotaData.perilakuMerokok = input.value;
-                                break;
-                            default:
-                                anggotaData[name] = input.value;
-                        }
+            // Collect anggota keluarga data
+            const anggotaKeluarga = [];
+            for (let i = 1; i <= anggotaCounter; i++) {
+                const namaInput = document.getElementById(`namaAnggota${i}`);
+                const nikInput = document.getElementById(`nikAnggota${i}`);
+                const tanggalInput = document.getElementById(`tanggalLahirAnggota${i}`);
+                
+                if (namaInput && namaInput.value.trim()) {
+                    anggotaKeluarga.push({
+                        nama: namaInput.value.trim(),
+                        nik: nikInput ? nikInput.value.trim() : '',
+                        tanggalLahir: tanggalInput ? tanggalInput.value : ''
                     });
-                    
-                    // Kirim data untuk anggota ini
-                    setTimeout(() => {
-                        kirimKeSpreadsheet(anggotaData, index === anggotaCards.length - 1);
-                    }, index * 500); // Delay untuk menghindari konflik
-                });
-            }
-        });
-
-        function kirimKeSpreadsheet(data, isLast = true) {
-            const status = document.getElementById('status');
-            const statusMessage = document.getElementById('statusMessage');
-            
-            // Tampilkan loading hanya untuk pengiriman pertama
-            if (!status.classList.contains('bg-blue-100')) {
-                status.classList.remove('hidden');
-                status.className = 'mt-6 text-center bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg';
-                statusMessage.textContent = 'Mengirim data ke spreadsheet...';
-            }
-
-            // URL Google Apps Script Web App
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyyboG0fLYW1iIlK7Z66Zs2fPgXw667PN2TFxBvPqPWCRoY9nTLy89QyLrTiVc80gEA9Q/exec';
-            
-            // Buat URL dengan parameter untuk kompatibilitas dengan Apps Script
-            const params = new URLSearchParams();
-            Object.keys(data).forEach(key => {
-                if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
-                    params.append(key, data[key]);
                 }
-            });
+            }
+            data.anggotaKeluarga = anggotaKeluarga;
             
-            fetch(scriptURL, {
+            // Collect penyakit data
+            const penyakitCheckboxes = document.querySelectorAll('input[name="penyakit"]:checked');
+            data.penyakit = Array.from(penyakitCheckboxes).map(cb => cb.value);
+            
+            // Add timestamp
+            data.timestamp = new Date().toLocaleString('id-ID');
+            
+            console.log('Data yang akan dikirim:', data);
+            
+            // URL Apps Script yang sudah di-deploy
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxkEfmpKvSHf-2cXeOoa4NICCj3isMmfhDx0yfkB4Ln82WSRA-TpvTaxi9hAD0IRFYr/exec';
+            
+            // Kirim data ke Google Apps Script
+            fetch(SCRIPT_URL, {
                 method: 'POST',
+                mode: 'no-cors', // Penting untuk Apps Script
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/json',
                 },
-                mode: 'no-cors',
-                body: params.toString()
+                body: JSON.stringify(data)
             })
             .then(() => {
-                // Tampilkan sukses hanya untuk pengiriman terakhir
-                if (isLast) {
-                    status.className = 'mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg';
-                    statusMessage.textContent = '✅ Semua data berhasil dikirim ke spreadsheet!';
-                    
-                    // Reset form setelah 3 detik
-                    setTimeout(() => {
-                        document.getElementById('tbcForm').reset();
-                        document.getElementById('anggotaContainer').innerHTML = '';
-                        anggotaCount = 0;
-                        document.getElementById('tambahAnggota').click();
-                        status.classList.add('hidden');
-                    }, 3000);
-                }
+                // Mode no-cors tidak bisa membaca response, jadi kita asumsikan sukses
+                console.log('Data berhasil dikirim ke Apps Script');
+                successMsg.style.display = 'block';
+                
+                // Reset form
+                this.reset();
+                document.getElementById('anggotaKeluargaContainer').innerHTML = '';
+                anggotaCounter = 0;
+                
+                // Reset conditional fields
+                document.getElementById('sumberAirContainer').style.display = 'none';
+                document.getElementById('jambanSaniterContainer').style.display = 'none';
+                document.getElementById('namaGangguanJiwaContainer').style.display = 'none';
+                document.getElementById('jenisSumberAir').style.display = 'none';
+                document.getElementById('jenisJamban').style.display = 'none';
+                
+                // Scroll ke atas untuk melihat pesan sukses
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
             })
             .catch(error => {
-                console.log('Fetch gagal untuk data:', data);
-                
-                if (isLast) {
-                    // Coba metode alternatif untuk pengiriman terakhir
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = scriptURL;
-                    form.target = '_blank';
-                    form.style.display = 'none';
-                    
-                    Object.keys(data).forEach(key => {
-                        if (data[key] !== null && data[key] !== undefined && data[key] !== '') {
-                            const input = document.createElement('input');
-                            input.type = 'hidden';
-                            input.name = key;
-                            input.value = data[key];
-                            form.appendChild(input);
-                        }
-                    });
-                    
-                    document.body.appendChild(form);
-                    form.submit();
-                    document.body.removeChild(form);
-                    
-                    status.className = 'mt-6 text-center bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg';
-                    statusMessage.textContent = '✅ Data dikirim! Cek tab baru untuk konfirmasi.';
-                    
-                    setTimeout(() => {
-                        document.getElementById('tbcForm').reset();
-                        document.getElementById('anggotaContainer').innerHTML = '';
-                        anggotaCount = 0;
-                        document.getElementById('tambahAnggota').click();
-                        status.classList.add('hidden');
-                    }, 3000);
-                }
+                console.error('Error mengirim data:', error);
+                errorMsg.innerHTML = '❌ Gagal mengirim data ke spreadsheet. Periksa koneksi internet dan URL Apps Script.';
+                errorMsg.style.display = 'block';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📤 Kirim Data ke Spreadsheet';
             });
-        }
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984908351249ce29',t:'MTc1ODc4NzY5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'984f452b8003712c',t:'MTc1ODg1MzEwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
